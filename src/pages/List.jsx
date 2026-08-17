@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function List() {
-  const [entries, setEntries] = useState([]);
+export default function List({ entries }) {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const storedEntries = localStorage.getItem("entries");
-    const loadedEntries = JSON.parse(storedEntries || "[]");
-
-    loadedEntries.sort((a, b) => b.date.localeCompare(a.date));
-    setEntries(loadedEntries);
-  }, []);
 
   return (
     <>
@@ -23,7 +14,7 @@ export default function List() {
               setSelectedEntry(entry);
               setIsModalOpen(true);
             }}
-            className="flex flex-col w-80 bg-pink-200 border-4 border-fuchsia-800 rounded-3xl overflow-hidden shadow-xl cursor-pointer"
+            className="flex flex-col w-80 bg-pink-200 border-4 border-fuchsia-800 rounded-3xl overflow-hidden shadow-xl cursor-pointer hover:rotate-1 hover:scale-101 transition-all ease-in-out duration-800"
           >
             <img
               src={entry.image}
@@ -53,7 +44,7 @@ export default function List() {
 
               <p className="font-semibold">{selectedEntry.date}</p>
 
-              <p>{selectedEntry.content}</p>
+              <p className="whitespace-pre-line">{selectedEntry.content}</p>
 
               <button
                 onClick={() => setIsModalOpen(false)}
