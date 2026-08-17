@@ -31,25 +31,32 @@ export default function Home() {
         return;
     }
 
-    localStorage.setItem(
+    const storedEntries = localStorage.getItem("entries");
+    const entries = JSON.parse(storedEntries || "[]");
+
+    const exists = entries.some((entry) => entry.date === date);
+
+    if (exists) {
+      alert("An entry for this date already exists.");
+      return;
+    }
+
+    entries.push({
       date,
-      JSON.stringify({
-        date: date,
-        image: image,
-        title: title,
-        content: content,
-      }),
-    );
-    console.log(localStorage);
+      image,
+      title,
+      content,
+    });
+
+    localStorage.setItem("entries", JSON.stringify(entries));
 
     e.target.reset();
-    navigate(-1);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col max-h-[80vh] h-180 max-w-full w-250 sm:max-w-8/10 bg-pink-200 rounded-b-[100px] rounded-t-[40px] border-4 border-fuchsia-800 shadow-xl overflow-hidden"
+      className="flex flex-col max-h-[80vh] h-180 max-w-full w-250 sm:max-w-8/10 bg-pink-200 text-gray-800 rounded-b-[100px] rounded-t-[40px] border-4 border-fuchsia-800 shadow-xl overflow-hidden"
     >
       <div className="flex justify-between">
         <div className="flex flex-col items-center ml-8 mt-4">
