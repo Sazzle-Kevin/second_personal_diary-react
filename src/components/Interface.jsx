@@ -4,9 +4,9 @@ import { Outlet } from "react-router";
 
 export default function Interface() {
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gray-800">
+    <div className="min-h-screen w-full flex flex-col justify-between bg-gray-800">
       <Header />
-      <main>
+      <main className="flex justify-center">
         <Outlet />
       </main>
       <Footer />
